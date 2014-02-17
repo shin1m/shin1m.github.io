@@ -1,0 +1,40 @@
+extends ../layout
+
+block title
+  | creole.js Live Demo
+
+block mainMenu
+  +mainMenu("creole.js/demo.html")
+
+block content
+  .col-md-5
+    .row
+      textarea#source.form-control.col-md-12(rows="24").
+        = creole.js Live Demo
+        
+        creole.js is a [[http://wikicreole.org/wiki/Creole1.0|Creole 1.0]] parser for javascript.
+        
+        It can run on both client side and server side.
+        
+        ----
+        Edit the source on the left side.
+        
+        {{http://wikicreole.org/imageServlet?page=CheatSheet%2Fcreole_cheat_sheet.png}}
+  .col-md-7
+    #preview
+
+append scripts
+  script(src="creole.js")
+  script(src="html.js")
+  script.
+    var builder = new html.Builder();
+    var preview = function() {
+      builder.reset();
+      creole.parse(builder, $('#source').val());
+      $('#preview').html(builder.result.join(''));
+    };
+    $('#source').data('preview', null).on('input', function() {
+      clearTimeout($(this).data('preview'));
+      $(this).data('preview', setTimeout(preview, 500));
+    });
+    preview();

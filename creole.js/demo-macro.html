@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><title>shin1m -&nbsp;creole.js Live Demo with Macro</title><link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><style type="text/css">body {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}</style></head><body><div class="navbar navbar-default navbar-fixed-top"><div class="container"><div class="navbar-header"><button data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="../index.html" class="navbar-brand">shin1m</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li><a href="../http://github.com/shin1m/xemmai">xemmai</a></li><li><a href="../http://github.com/shin1m/creole.js">creole.js</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-5"><div class="row"><textarea id="source" rows="24" class="form-control col-md-12">= creole.js Live Demo with Macro
+
+<<SayHello To='World'>>
+
+<<FlickrPhotos Tags='mount rainier' Limit='2'>>
+
+<<GoogleMap Address='mount rainier'>>
+
+----
+Edit the source on the left side.</textarea></div></div><div class="col-md-7"><div id="preview"></div></div></div><hr><footer><p>&copy; 2014 shin1m</p></footer></div><script src="http://code.jquery.com/jquery-2.1.0.min.js"></script><script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script src="creole.js"></script><script src="html.js"></script><script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script><script>var builder = new html.Builder();
+builder.macros.SayHello = function(builder, parameters) {
+  if (parameters.To === undefined)
+    builder.e('<<SayHello To=\'...\'>>');
+  else
+    builder.e('Hello, ' + parameters.To + '!');
+};
+builder.macros.FlickrPhotos = function(builder, parameters) {
+  if (parameters.Tags === undefined) {
+    builder.u('<div>');
+    builder.e('<<FlickrPhotos Tags=\'...\' [Limit=\'...\']>>');
+    builder.u('</div>');
+  } else {
+    builder.u('<div data-flickr-tags="');
+    builder.e(parameters.Tags);
+    if (parameters.Limit !== undefined) {
+      builder.u('" data-flickr-limit="');
+      builder.e(parameters.Limit);
+    }
+    builder.u('"></div>');
+  }
+};
+builder.macros.GoogleMap = function(builder, parameters) {
+  if (parameters.Address === undefined) {
+    builder.u('<div>');
+    builder.e('<<GoogleMap Address=\'...\'>>');
+    builder.u('</div>');
+  } else {
+    builder.u('<div style="width: 100%; height: 30em;" data-google-map-address="');
+    builder.e(parameters.Address);
+    builder.u('"></div>');
+  }
+};
+var preview = function() {
+  builder.reset();
+  creole.parse(builder, $('#source').val());
+  $('#preview').html(builder.result.join(''));
+  $('#preview div[data-flickr-tags]').each(function() {
+    var self = $(this);
+    $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
+      tags: self.attr('data-flickr-tags'),
+      tagmode: 'any',
+      format: 'json'
+    }, function(data) {
+      var limit = self.attr('data-flickr-limit');
+      if (limit !== undefined) limit = parseInt(limit) - 1;
+      $.each(data.items, function(i, item) {
+        $('<a></a>').attr('href', item.link).append($('<img/>').attr('src', item.media.m).attr('title', item.title)).appendTo(self);
+        if (limit !== undefined && i === limit) return false;
+      });
+    });
+  });
+  $('#preview div[data-google-map-address]').each(function() {
+    var element = this;
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: $(this).attr('data-google-map-address'),
+    }, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        new google.maps.Map(element, {
+          center: results[0].geometry.location,
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+      } else {
+        alert('Geocode failed: ' + status);
+      }
+    });
+  });
+};
+$('#source').data('preview', null).on('input', function() {
+  clearTimeout($(this).data('preview'));
+  $(this).data('preview', setTimeout(preview, 500));
+});
+preview();</script></body></html>
