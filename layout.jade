@@ -1,7 +1,8 @@
 doctype
 
 mixin mainMenu(current)
-  - var items = [["http://github.com/shin1m/xemmai", "xemmai"], ["http://github.com/shin1m/creole.js", "creole.js"]];
+  //- var items = [["http://github.com/shin1m/xemmai", "xemmai"], ["http://github.com/shin1m/creole.js", "creole.js"]];
+  - var items = [["https://medium.com/@shin1morita", "Medium"]];
   each item in items
     if current === item[0]
       li.active: a(href="#{root}#{item[0]}")= item[1]
@@ -13,7 +14,7 @@ html
     title
       | shin1m -&nbsp;
       block title
-    link(rel="stylesheet", media="screen", href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
+    link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
     style(type="text/css").
       body {
         padding-top: 70px;
@@ -37,7 +38,7 @@ html
         block content
       hr
       footer
-        p &copy; 2014 shin1m
+        p &copy; shin1m
     block scripts
-      script(src="http://code.jquery.com/jquery-2.1.0.min.js")
-      script(src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
+      script(src="http://code.jquery.com/jquery-2.1.4.min.js")
+      script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
