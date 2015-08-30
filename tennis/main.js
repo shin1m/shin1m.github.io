@@ -260,8 +260,11 @@
         return function() {
           var key, ref, value;
           ref = {
-            13: function() {
+            9: function() {
               this.side = -this.side;
+              return this.transit_ready();
+            },
+            13: function() {
               return this.transit_ready();
             }
           };
