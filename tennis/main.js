@@ -322,7 +322,7 @@
       return this.player1.transit(Player.prototype.state_swing);
     };
 
-    toss_message = ['  CHANGE SIDES: START', '      POSITION: +    ', 'COURCE & SWING: + & *'];
+    toss_message = ['     CHANGE SIDES: SELECT', '         POSITION: +     ', 'PLACEMENT & SWING: + & * ', '', '             LOB         ', '      TOPSPIN * FLAT     ', '            SLICE        '];
 
     trainings = {
       serve: {
@@ -332,7 +332,7 @@
           this.player0.reset(1.0, Player.prototype.state_serve_set);
           this.player1.node.position.set(-9 * 12 * 0.0254 * this.side, 0.0, -39 * 12 * 0.0254);
           this.player1.reset(-1.0, Player.prototype.state_default);
-          this.set_instruction(['CHANGE SIDES: START', '    POSITION: < + >', '        TOSS:   *  ', '      COURCE: < + >', '       SWING:   *  ']);
+          this.set_instruction(['CHANGE SIDES: SELECT', '    POSITION: < + > ', '        TOSS:   *   ', '   DIRECTION: < + > ', '       SWING:   *   ', '', '        SECOND      ', '     SPIN * FLAT    ', '        SLICE       ']);
           return this.duration = 0.0 * 64.0;
         },
         play: function() {}
