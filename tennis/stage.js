@@ -121,6 +121,9 @@
               return (ref1 = child.material) != null ? ref1.alphaTest = 0.5 : void 0;
             });
             _this.scene = new THREE.Scene;
+            _this.scene.add(new THREE.AmbientLight(0x333333));
+            _this.directionalLight = new THREE.DirectionalLight(0xffffff);
+            _this.scene.add(_this.directionalLight);
             _this.scene.add(collada.scene);
             _this.camera0 = new THREE.PerspectiveCamera(12.0, 1.0, 10.0, 200.0);
             _this.camera1 = new THREE.PerspectiveCamera(12.0, 1.0, 10.0, 200.0);
@@ -192,11 +195,13 @@
         this.camera0.setViewOffset(width, height, 0, 0, width, height);
         renderer.setViewport(0, 0, width, height);
       }
+      this.directionalLight.position.set(1.0, 1.0, (this.camera0.position.z > 0.0 ? 0.5 : -0.5));
       renderer.render(this.scene, this.camera0);
       if (this.dual) {
         this.camera1.aspect = width * 0.5 / height;
         this.camera1.setViewOffset(width * 0.5, height, 0, 0, width * 0.5, height);
         renderer.setViewport(width * 0.5, 0, width * 0.5, height);
+        this.directionalLight.position.set(1.0, 1.0, (this.camera1.position.z > 0.0 ? 0.5 : -0.5));
         return renderer.render(this.scene, this.camera1);
       }
     };
