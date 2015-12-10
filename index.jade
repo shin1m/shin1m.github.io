@@ -12,14 +12,36 @@ block content
     small A dynamic programming language
   p.
     xemmai is a dynamic programming language.
+    Its syntax is based on the off-side rule.
+    Closing parentheses, brackets, and braces can be omitted where they are not necessary in conjunction with indentation.
+  p.
+    Here is how it looks like:
+  pre.
+    system = Module("system"
+    print = system.out.write_line
+
+    hanoi = @(towers, move)
+        f = @(height, from, via, to)
+            if height > 1: f(height - 1, from, to, via
+            move(from, to
+            if height > 1: f(height - 1, via, from, to
+        f(towers[0].size(), towers[0], towers[1], towers[2]
+
+    towers = '([3, 2, 1], [], []
+    print(towers
+    hanoi(towers, @(from, to)
+        to.unshift(from.shift(
+        print(towers
+  p.
     It has lambda closures, classes, exceptions, modules, threads, and fibers.
-    It aims to be a general purpose glue language.
   p.
     It is implemented in C++ and has C++ friendly API to implement extension modules.
-    Internally, codes are executed on a bytecode interpreter.
-    It also has a concurrent garbage collector to utilize multiple processors.
+    It aims to be a general purpose glue language.
   p.
     It runs on linux, windows, and hopefully other unix systems.
+  p.
+    Internally, codes are executed on a bytecode interpreter.
+    It also has a concurrent garbage collector to utilize multiple processors.
   p: a.btn.btn-primary(href="http://github.com/shin1m/xemmai") View project on GitHub &raquo;
 
   h1
