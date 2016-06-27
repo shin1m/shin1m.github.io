@@ -304,6 +304,10 @@
       return projected_time_for_y(this.position.y, this.velocity.y, y, sign);
     };
 
+    Ball.prototype.projected_y_in = function(t) {
+      return this.position.y + (this.velocity.y - 0.5 * G * t) * t;
+    };
+
     Ball.prototype.create_record = function() {
       var record;
       record = {};

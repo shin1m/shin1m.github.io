@@ -271,7 +271,7 @@
     };
 
     load = function(skin, source, next) {
-      var fps, read_action, read_ready_action, read_run, read_run_actions, read_shot, read_shot_with_reach, read_swing, read_swing_actions, request, source_fps;
+      var fps, read_action, read_ready_action, read_run, read_run_actions, read_shot, read_shot_with_reach, read_swing, read_swing_actions, read_swing_volley, request, source_fps;
       source_fps = null;
       fps = 64.0;
       read_action = function(e, use) {
@@ -331,10 +331,17 @@
           smash: read_action(e.querySelector('smash'), is_upper)
         };
       };
+      read_swing_volley = function(e) {
+        return {
+          middle: read_shot_with_reach(e.querySelector('middle')),
+          high: read_shot_with_reach(e.querySelector('high')),
+          low: read_shot_with_reach(e.querySelector('low'))
+        };
+      };
       read_swing_actions = function(e) {
         return {
           stroke: read_shot_with_reach(e.querySelector('stroke')),
-          volley: read_shot_with_reach(e.querySelector('volley')),
+          volley: read_swing_volley(e.querySelector('volley')),
           smash: read_swing(e.querySelector('smash'))
         };
       };
@@ -558,6 +565,10 @@
       }
     };
 
+    Player.prototype.volley_height = function() {
+      return this.actions.swing.forehand.volley.middle.flat.spot.elements[13];
+    };
+
     Player.prototype.smash_height = function() {
       return this.actions.swing.forehand.smash.spot.elements[13] - 0.25;
     };
@@ -712,7 +723,7 @@
         return this.node.position.add(d);
       }
     }, function(shot) {
-      var actions, ball, hand, impact, shots, swing, t, whichhand;
+      var actions, ball, hand, impact, shots, swing, t, volley_height, whichhand, y;
       this.ready = null;
       this.node.lookAt(this.shot_direction().add(this.node.position));
       this.node.updateMatrixWorld(false);
@@ -730,19 +741,24 @@
           }
         }
       }
-      t = this.ball["in"] ? 0.0 : this.ball.projected_time_for_y(this.ball.radius, 1.0);
       hand = whichhand > 0.0 ? actions.forehand : actions.backhand;
       if (this.ball.done) {
-        this.set_motion(new Motion((this.node.position.z * this.end > 21 * 12 * 0.0254 ? hand.stroke : hand.volley)[shot]));
+        this.set_motion(new Motion((this.node.position.z * this.end > 21 * 12 * 0.0254 ? hand.stroke : hand.volley.middle)[shot]));
       } else {
-        shots = hand.volley;
+        swing = hand.volley.middle[shot];
+        y = this.ball["in"] ? -1.0 : this.ball.projected_y_in((swing.impact - swing.start) * 60.0);
+        volley_height = this.volley_height();
+        if (y > volley_height + 0.375) {
+          shots = hand.volley.high;
+        } else if (y > volley_height - 0.375) {
+          shots = hand.volley.middle;
+        } else if (y > 0.0) {
+          shots = hand.volley.low;
+        } else {
+          shots = hand.stroke;
+        }
         swing = shots[shot];
         impact = (swing.impact - swing.start) * 60.0;
-        if (t < impact) {
-          shots = hand.stroke;
-          swing = shots[shot];
-          impact = (swing.impact - swing.start) * 60.0;
-        }
         ball = this.relative_ball(swing, this.ball.velocity.clone().multiplyScalar(impact).add(this.ball.position));
         if (ball.x < -0.5 || (whichhand > 0.0 ? ball.z > 1.0 : ball.z < -1.0)) {
           this.set_motion(new Motion(shots.reach));

@@ -168,7 +168,7 @@
           }
           if (!swing) {
             hand = whichhand > 0.0 ? actions.forehand : actions.backhand;
-            swing = (net && !ball["in"] ? hand.volley : hand.stroke)[shot];
+            swing = (net && !ball["in"] ? hand.volley.middle : hand.stroke)[shot];
             ix = swing.spot.elements[12];
             iz = swing.spot.elements[14];
             if (net || ball["in"]) {
