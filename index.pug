@@ -3,9 +3,6 @@ extends layout
 block title
   | Home
 
-block mainMenu
-  mixin mainMenu("index.html")
-
 block content
   h1
     | xemmai 
@@ -42,28 +39,28 @@ block content
   p.
     Internally, codes are executed on a bytecode interpreter.
     It also has a concurrent garbage collector to utilize multiple processors.
-  p: a.btn.btn-primary(href="http://github.com/shin1m/xemmai") View project on GitHub &raquo;
+  p: a.btn.btn-primary(href='http://github.com/shin1m/xemmai') View project on GitHub &raquo;
 
   h1
     | creole.js 
     small Creole parser for javascript.
   p
     | creole.js is a 
-    a(href="http://wikicreole.org/wiki/Creole1.0") Creole 1.0
+    a(href='http://wikicreole.org/wiki/Creole1.0') Creole 1.0
     |  parser for javascript.
     | It can run on both client side and server side.
   p
-    a.btn.btn-primary(href="http://github.com/shin1m/creole.js") View project on GitHub &raquo;
+    a.btn.btn-primary(href='http://github.com/shin1m/creole.js') View project on GitHub &raquo;
     | 
-    a.btn.btn-primary(href="creole.js/demo.html") See Live Demo &raquo;
+    a.btn.btn-primary(href='creole.js/demo.html') See Live Demo &raquo;
     | 
-    a.btn.btn-primary(href="creole.js/demo-macro.html") See Live Demo with Macro &raquo;
+    a.btn.btn-primary(href='creole.js/demo-macro.html') See Live Demo with Macro &raquo;
 
   h1
     | WakuWakuTennis 
     small A tennis game using WebGL
   p
     | Powered by 
-    a(href="http://threejs.org") three.js
+    a(href='http://threejs.org') three.js
     | . Tested only on Chromium.
-  p: a.btn.btn-primary(href="tennis/wwt.html") Play &raquo;
+  p: a.btn.btn-primary(href='tennis/wwt.html') Play &raquo;

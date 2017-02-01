@@ -1,8 +1,8 @@
 fs = require 'fs'
 join = (require 'path').join
-jade = require 'jade'
+pug = require 'pug'
 
-pattern = /\.jade$/
+pattern = /\.pug$/
 modified = null
 
 render = (path, root) ->
@@ -14,7 +14,7 @@ render = (path, root) ->
         return unless err || stat0.mtime < stat.mtime || stat0.mtime < modified
         fs.readFile path, 'utf8', (err, source) ->
           throw err if err
-          output = jade.compile(source, {filename: path}) {root: root}
+          output = pug.compile(source, {filename: path}) {root: root}
           fs.writeFile target, output, (err) ->
             throw err if err
             console.log 'rendered %s', target
@@ -24,8 +24,8 @@ render = (path, root) ->
         files.map((file) -> join path, file).forEach (path) ->
           render path, root + '../'
 
-fs.lstat 'layout.jade', (err, stat) ->
+fs.lstat 'layout.pug', (err, stat) ->
   throw err if err
   modified = stat.mtime
-  render 'index.jade', ''
+  render 'index.pug', ''
   render 'creole.js', ''

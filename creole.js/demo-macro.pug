@@ -3,13 +3,10 @@ extends ../layout
 block title
   | creole.js Live Demo with Macro
 
-block mainMenu
-  +mainMenu("creole.js/demo-macro.html")
-
 block content
   .col-md-5
     .row
-      textarea#source.form-control.col-md-12(rows="24").
+      textarea#source.form-control.col-md-12(rows='24').
         = creole.js Live Demo with Macro
         
         <<SayHello To='World'>>
@@ -24,9 +21,9 @@ block content
     #preview
 
 append scripts
-  script(src="creole.js")
-  script(src="html.js")
-  script(src="http://maps.googleapis.com/maps/api/js?sensor=false")
+  script(src='creole.js')
+  script(src='html.js')
+  script(src='http://maps.googleapis.com/maps/api/js?sensor=false')
   script.
     var builder = new html.Builder();
     builder.macros.SayHello = function(builder, parameters) {
