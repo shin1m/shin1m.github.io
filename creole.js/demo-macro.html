@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>shin1m -&nbsp;creole.js Live Demo with Macro</title><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"><style type="text/css">body {
+<!DOCTYPE html><html><head><title>shin1m -&nbsp;creole.js Live Demo with Macro</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"><style type="text/css">body {
   padding-top: 70px;
   padding-bottom: 70px;
 }</style></head><body><div class="navbar navbar-default navbar-fixed-top"><div class="container"><div class="navbar-header"><button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="../index.html">shin1m</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li><a href="https://medium.com/@shin1morita">Medium</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-5"><div class="row"><textarea class="form-control col-md-12" id="source" rows="24">= creole.js Live Demo with Macro
@@ -10,7 +10,7 @@
 <<GoogleMap Address='mount rainier'>>
 
 ----
-Edit the source on the left side.</textarea></div></div><div class="col-md-7"><div id="preview"></div></div></div><hr><footer><p>&copy; shin1m</p></footer></div><script src="http://code.jquery.com/jquery-2.1.4.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script><script src="creole.js"></script><script src="html.js"></script><script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script><script>var builder = new html.Builder();
+Edit the source on the left side.</textarea></div></div><div class="col-md-7"><div id="preview"></div></div></div><hr><footer><p>&copy; shin1m</p></footer></div><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script><script src="creole.js"></script><script src="html.js"></script><script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script><script>var builder = new html.Builder();
 builder.macros.SayHello = function(builder, parameters) {
   if (parameters.To === undefined)
     builder.e('<<SayHello To=\'...\'>>');
@@ -49,7 +49,7 @@ var preview = function() {
   $('#preview').html(builder.result.join(''));
   $('#preview div[data-flickr-tags]').each(function() {
     var self = $(this);
-    $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
+    $.getJSON('https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
       tags: self.attr('data-flickr-tags'),
       tagmode: 'any',
       format: 'json'

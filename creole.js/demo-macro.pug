@@ -23,7 +23,7 @@ block content
 append scripts
   script(src='creole.js')
   script(src='html.js')
-  script(src='http://maps.googleapis.com/maps/api/js?sensor=false')
+  script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
   script.
     var builder = new html.Builder();
     builder.macros.SayHello = function(builder, parameters) {
@@ -64,7 +64,7 @@ append scripts
       $('#preview').html(builder.result.join(''));
       $('#preview div[data-flickr-tags]').each(function() {
         var self = $(this);
-        $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
+        $.getJSON('https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
           tags: self.attr('data-flickr-tags'),
           tagmode: 'any',
           format: 'json'
